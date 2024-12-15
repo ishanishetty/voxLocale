@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VoxLocale</title> 
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #87CEFA 0%, #D1F7D6 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(135deg, rgba(30, 144, 255, 0.9), rgba(33, 250, 138, 0.9));
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .auth-links {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .auth-links a {
+            text-decoration: none;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background 0.3s, color 0.3s;
+            font-size: 1rem;
+        }
+
+        .auth-links .login-btn {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .auth-links .login-btn:hover {
+            background: white;
+            color: #1E90FF;
+        }
+
+        .auth-links .signup-btn {
+            background: #1E90FF;
+            color: white;
+        }
+
+        .auth-links .signup-btn:hover {
+            background: #1C86EE;
+        }
+
+        .logo-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+        .site-title {
+            font-size: 1.8rem;
+            font-family: 'Poppins', sans-serif;
+            font-weight: bold;
+            margin: 0;
+            color: white;
+        }
+        header img {
+            width: 60px;
+        }
+        .menu-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        nav {
+            position: absolute;
+            top: 60px;
+            right: 2rem;
+            background-color: #D1F7D6;
+            width: 250px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        nav a {
+            text-decoration: none;
+            color: #1E90FF;
+            font-weight: bold;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: background 0.3s, color 0.3s;
+        }
+        nav a:last-child {
+            border-bottom: none;
+        }
+        nav a:hover {
+            background-color: #BBF7D0;
+            color: #333;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 100%;
+            background-color: white;
+            width: 200px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 1;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: #333;
+            padding: 0.8rem 1rem;
+            text-decoration: none;
+            display: block;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .dropdown-content a:hover {
+            background-color: #D1F7D6;
+        }
+        .show {
+            display: flex;
+        }
+        .hero {
+            text-align: center;
+            padding: 6rem 2rem;
+            background: url('neighborhood.jpg') center/cover no-repeat, linear-gradient(135deg, rgba(30, 144, 255, 0.7), rgba(33, 250, 138, 0.7));
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .hero h1, .hero p, .hero button {
+            position: relative;
+            z-index: 2;
+        }
+        .hero h1 {
+            font-size: 4rem;
+            font-family: 'Poppins', cursive;
+            margin-bottom: 1rem;
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero button {
+            background: #1E90FF;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .hero button:hover {
+            background: #1C86EE;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+            background: #D1F7D6;
+        }
+        .feature {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+            position: relative;
+        }
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+        .feature img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1.5rem;
+        }
+        .cta {
+            text-align: center;
+            margin: 3rem 0;
+            background: linear-gradient(135deg, #87CEFA, #D1F7D6);
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .cta button {
+            background: #1E90FF;
+            color: white;
+            border: none;
+            padding: 1rem 3rem;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .cta button:hover {
+            background: #1C86EE;
+        }
+        footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #1E90FF;
+            color: white;
+            margin-top: 2rem;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <script>
+        function toggleMenu() {
+            const nav = document.querySelector('nav');
+            nav.classList.toggle('show');
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo-title">
+            <img src="neighborconnect-logo.png" alt="NeighborConnect Logo">
+            <h1 class="site-title">VoxLocale</h1>
+        </div>
+        <div class="header-right">
+            <button class="menu-button" onclick="toggleMenu()">☰</button>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+                <div class="dropdown">
+                    <a href="#">More</a>
+                    <div class="dropdown-content">
+                        <a href="#report">Report</a>
+                        <a href="#collaborate">Collaborate</a>
+                    </div>
+                </div>
+            </nav>
+            <div class="auth-links">
+                <a href="login.html" class="login-btn">Login</a>
+                <a href="signup.html" class="signup-btn">Signup</a>
+            </div>
+        </div>
+    </header>
+    <div class="hero">
+        <h1>Empower Your Community </h1>
+        <p>Report issues, engage with solutions, and advocate for change!</p>
+        <button onclick="location.href='signup.html'">Join Us Now </button>
+    </div>
+    <section id="features" class="features">
+        <div class="feature">
+            <img src="report-icon.png" alt="Report Icon">
+            <h2>Report Issues </h2>
+            <p>Submit and track local issues like potholes, waste management, and streetlight outages.</p>
+        </div>
+        <div class="feature">
+            <img src="dashboard-icon.png" alt="Dashboard Icon">
+            <h2>Community Dashboard </h2>
+            <p>Stay informed with real-time updates and see reported issues across your neighborhood.</p>
+        </div>
+        <div class="feature">
+            <img src="elderly-icon.png" alt="Elderly Support Icon">
+            <h2>Elderly Support </h2>
+            <p>Simple, user-friendly interfaces to ensure inclusivity for all age groups.</p>
+        </div>
+        <div class="feature">
+            <img src="collaborate-icon.png" alt="Collaborate Icon">
+            <h2>Collaborate </h2>
+            <p>Engage with neighbors to brainstorm and implement solutions.</p>
+        </div>
+    </section>
+    <div class="cta">
+        <h2>Be the Change Maker</h2>
+        <button onclick="location.href='get-involved.html'">Get Involved</button>
+    </div>
+    <footer>
+        <p>&copy; 2024 VoxLocale. All Rights Reserved.</p> 
+    </footer>
+</body>
+</html>
